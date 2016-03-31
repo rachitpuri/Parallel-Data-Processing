@@ -1,0 +1,36 @@
+Note: Include Jars required to run hadoop programs in the provided "lib" folder (since uploading Jars is not allowed)
+Also, include your input data file in all folder
+
+Prerequisites for document generation using R markdown:
+1. ggplot2 -> install.packages("ggplot2")
+2. rmarkdown -> install.packages("rmarkdown")
+3. Incase you are getting pandoc version errors:
+	https://github.com/rstudio/rmarkdown/blob/master/PANDOC.md
+
+Prerequisites to run on local cluster:
+1. export HADOOP_CLASSPATH=.:`hadoop classpath`
+2. sudo apt-get install r-cran-ggplot2 
+3. If a tmp directory path is specified in core-site.xml, then please delete that tmp folder.
+If no path is specified(as per instructions), then the script will handle deletions 
+4. export HADOOP_HOME=/usr/local/hadoop
+5. export PATH=${PATH}:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin
+6. Other basic hadoop setup on local machine (make sure datanode and namenode are running properly)
+7. Input data (i.e. all folder after extracting tar.gz) must be present at current working directory (where make commands are being executed)
+
+Prerequisites to run on EMR:
+1. We are assuming that jobs are being run at our EMR (setup for S3 has already been done, no changes required)
+2. sudo apt-get install r-cran-ggplot2 
+3. Type : aws configure
+	AccessId : AKIAIVBPHI5IOAFANURA 
+	SecretKey : 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
+	region : us-west-2
+	output format : json
+
+
+=================================== Run ======================================
+
+Data: https://s3.amazonaws.com/cs6240sp16/all-v1.tar
+
+make run : It will compile the code and run benchmark test
+
+==============================================================================

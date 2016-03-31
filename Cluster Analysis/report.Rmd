@@ -1,0 +1,70 @@
+---
+title: "Report"
+author: "Adib, Rachit"
+date: "January 31, 2016"
+output: html_document
+---
+
+Design:
+
+1. Each Mapper reads split data from the input files and for each input record in that split it performs sanity.
+2. If sanity test pass, then we extract flights for year 2015 with key as "carrier code \t month" and value as "price"
+3. The default partioner sends mappers data to reducers based on keys
+4. Reducers computes the average price for each carrier and emits key as "carrier code \t month \t count" and value as "average price"
+5. Once all the output files from reducers are pushed into S3 bucket, we copy the output from S3 to local machine and combine them into
+   single output.
+6. Using R script, we extracted the top 10 airlines and plot the graph between average price v/s carrier for each month in year 2015
+
+Results:
+
+   carrier_code month total_flights average_price <br>
+           AS   Jan         13213      230.1071  <br>
+           B6   Jan         21579      523.6475 <br>
+           MQ   Jan         29635      288.2641 <br> 
+           US   Jan         33424      600.1602 <br>
+           UA   Jan         38324      969.0908<br>
+           AA   Jan         43971      530.1820<br>
+           OO   Jan         47737      307.3462<br>
+           EV   Jan         49589      305.6798<br>
+           DL   Jan         64082      598.8078<br>
+           WN   Jan         99553      159.3560<br>
+
+
+Conclusion: <br>
+1. There are no flights for any month except January that are active in 2015 <br>
+2. UA has the maximum average price of 969.09 <br>
+3. WN has the minimum average price of 159.35 <br>
+4. Ouput does include values for airlines having absurdly high and low (negative) ticket prices, additional check
+  can be made but since cutoffs are not provided we are not implementing them. <br>
+
+```{r}
+library(ggplot2)
+
+# Read output of Reducer
+df <- read.table("finaloutput")
+
+# V1 --> Carrier Code
+# V2 --> Month in 2015
+# V3 --> Total flights in 2015
+# V4 --> Average ticket price in 2015
+
+# Order by V3
+o1 <- df[order(df$V3),]
+
+# Get top 10 flights
+top10 <- tail(o1, n = 10L)
+colnames(top10) <- c("carrier_code", "month", "total_flights", "average_price")
+
+# Convert numeric month to letter abbrevation
+top10$month <- month.abb[top10$month]
+
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+p <- ggplot(top10, aes(carrier_code, average_price)) + geom_point()
+p + facet_grid(. ~ month)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -1,0 +1,34 @@
+1. Who are you?
+-> Rachit Puri
+
+2. Who's code are you reviewing?
+-> Akanksha Mishra
+
+3. Is it clear how to run it?
+-> Yes
+
+4. Could you get it to run? If not, why?
+-> No, Compilation issues. I was able to run after correcting some minor bugs.
+
+5. Does it work?
+-> No
+
+6. Can you understand the code?
+-> Yes
+
+7. Does their submission constitute a reasonable solution to the problem?
+-> No. Calculation of average price for arilines is missing.
+
+8. How does the overall design of the program differ from your solution?
+-> Almost followed the same approach. Calculation for converting hh:mm to minute method is better than mine.
+
+9. Which do you think is a better approach? Why?
+-> Both are equally good. 
+
+10. What would you improve about the code?
+-> Documentation is missing for methods. 
+   Indentation is not proper.
+
+11. Can you find any bugs?
+-> Brackets in IF condition were not proper.
+   return statement was missing in method

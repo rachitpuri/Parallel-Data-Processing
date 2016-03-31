@@ -1,0 +1,35 @@
+[
+    {
+        "Type": "CUSTOM_JAR",
+        "Name": "CLI Test JAR Step",
+        "ActionOnFailure": "CONTINUE",
+        "Jar": "s3://adibalwani/jobMean.jar",
+        "MainClass": "ClusterAnalysisMean",
+        "Args": [
+            "s3://adibalwani/input",
+            "s3://adibalwani/outputMean"
+        ]
+    },
+    {
+        "Type": "CUSTOM_JAR",
+        "Name": "CLI Test JAR Step",
+        "ActionOnFailure": "CONTINUE",
+        "Jar": "s3://adibalwani/jobMedian.jar",
+        "MainClass": "ClusterAnalysisMedian",
+        "Args": [
+            "s3://adibalwani/input",
+            "s3://adibalwani/outputMedian"
+        ]
+    },
+    {
+        "Type": "CUSTOM_JAR",
+        "Name": "CLI Test JAR Step",
+        "ActionOnFailure": "CONTINUE",
+        "Jar": "s3://adibalwani/jobFastMedian.jar",
+        "MainClass": "ClusterAnalysisFastMedian",
+        "Args": [
+            "s3://adibalwani/input",
+            "s3://adibalwani/outputFastMedian"
+        ]
+    }
+]
