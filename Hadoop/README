@@ -1,0 +1,33 @@
+* Before running any of our code make sure that none of your instances are running. You should terminate all your running instances.
+
+Prerequisites to run on EC2:
+
+1. Your credential file to be at this location "~/.aws/credentials"
+     Your credential file should have the format:
+     - access key ID
+     - Secret access key
+     - region = us-west-2
+     - output format = json
+
+2. Generate key pair with the name "ec2-key.pem" and save it in your current directory from where you will run the code.
+
+3. You have to create a security group on ec2 instances with the name "ec2-sec-key"
+
+4. Add rule "Allow all traffic" in your security group for inbound and outbound traffic.
+
+5. chmod 400 ec2-key.pem
+
+6. Set the permissions of credential file to CHMOD 400
+
+7. chmod +x start-cluster.sh stop-cluster.sh
+
+=================================== Run ======================================
+
+$ make compile
+$ ./start-cluster 8
+$ ./my-mapreduce WordCount.jar s3://foo/bar/input.txt s3://foo/bar/output
+$ ./stop-cluster
+
+Final output will be placed at the location specified by the client.
+NOTE: Jar name must be same as the Main Class name for the Job
+NOTE: Start Cluster script terminates when Stop cluster is called, since it is used for tracking the Job Status
